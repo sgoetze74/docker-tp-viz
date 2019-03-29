@@ -33,6 +33,8 @@ confident <- raw[which(raw$PG.ProteinAccessions %in% list_prot), ]
 confident[, log2fc := 0]
 confident$log2fc <- log2(as.numeric(unlist(confident[, (dim(confident)[2]-1), with=F]))) - log2(as.numeric(unlist(confident[, (dim(confident)[2]-2), with=F])))
 
+confident <- confident[which(!is.na(confident$log2fc)), ]
+
 write.table(confident, file=paste0(filename, "_preprocessed.tsv"), sep="\t", col.name=T, row.name=F, quote=F)
 
 message("Done.")
