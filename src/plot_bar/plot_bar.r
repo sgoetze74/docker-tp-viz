@@ -37,11 +37,9 @@ list_prot <- fread("~/project/phrt/TpViz/docker-tp-viz/data/Melanoma_marker_Anja
 
 for(i in 1:length(list_tsv)) {
 
+filename <- gsub("_preprocessed.tsv", "", list_tsv[i])
 
 message("Processing ", i, ": ", filename, "...")
-
-
-filename <- gsub("_preprocessed.tsv", "", list_tsv[i])
 
 raw <- fread(list_tsv[i], dec=",")
 
