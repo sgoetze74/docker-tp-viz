@@ -1,6 +1,7 @@
 library(data.table)
 
 fmi_gene <- fread("~/project/phrt/TpViz/docker-tp-viz/data/fmi_gene_list.txt", header=F)
+uniprot2gene <- fread("~/project/phrt/TpViz/docker-tp-viz/data/uniprotEntry2Gene")
 
 alternatives <- fmi_gene[grepl("_", fmi_gene$V1), ]
 alternatives[, gene1 := sapply( strsplit(alternatives$V1, "_"), "[[", 1  ) ]
@@ -18,10 +19,14 @@ pept_filename <- gsub("_Normalized_Protein_Report.tsv", "_Normalized_Peptides_Re
 message("Processing ", i, ": ", filename, "...")
 
 raw <- fread(list_tsv[i], dec=",")
+
+raw <- merge(uniprot2gene, raw, by.x="Entry", by.y="PG.ProteinAccessions")
+raw <- raw[-which(raw$Gene==""), ]
+
 raw <- raw[which(grepl("HUMAN", raw$PG.ProteinNames)), ]
 raw$PG.ProteinNames <- gsub("_HUMAN", "", raw$PG.ProteinNames)
-raw <- raw[-which(grepl("Keratin", raw$PG.ProteinNames)), ]
-names(raw)[which( names(raw) == "PG.ProteinNames" )] <- "Gene"
+#raw <- raw[-which(grepl("Keratin", raw$PG.ProteinNames)), ]
+#names(raw)[which( names(raw) == "PG.ProteinNames" )] <- "Gene"
 
 raw[which(!is.na(alternatives_long$V1[match(raw$Gene, alternatives_long$value)])), ]$Gene <- alternatives_long$V1[match(raw$Gene, alternatives_long$value)][which(!is.na(alternatives_long$V1[match(raw$Gene, alternatives_long$value)]))]
 
@@ -30,7 +35,8 @@ pept[, numPept := length(EG.PrecursorId), by=(PG.ProteinAccessions)]
 list_prot <- unique(pept[numPept > 2, ]$PG.ProteinAccessions)
 
 
-confident <- raw[which(raw$PG.ProteinAccessions %in% list_prot), ]
+#confident <- raw[which(raw$PG.ProteinAccessions %in% list_prot), ]
+confident <- raw[which(raw$Entry %in% list_prot), ]
 confident[, log2fc := 0]
 confident$log2fc <- log2(as.numeric(unlist(confident[, (dim(confident)[2]-1), with=F]))) - log2(as.numeric(unlist(confident[, (dim(confident)[2]-2), with=F])))
 

@@ -45,6 +45,7 @@ raw <- fread(list_tsv[i], dec=",")
 
 raw$log2fc <- as.numeric(raw$log2fc)
 
+raw$Gene <- sapply( strsplit(raw$Gene, "\\|"), "[[", 1)
 
 case <- copy(raw)
 
@@ -73,7 +74,7 @@ dev.off()
 
 
 
-markers <- raw[which(raw$PG.ProteinAccessions %in% list_prot$Uniprot), ]
+markers <- raw[which(raw$Entry %in% list_prot$Uniprot), ]
 
 markers$log2fc <- as.numeric(markers$log2fc)
 
