@@ -20,6 +20,7 @@ message("Processing ", i, ": ", filename, "...")
 raw <- fread(list_tsv[i], dec=",")
 raw <- raw[which(grepl("HUMAN", raw$PG.ProteinNames)), ]
 raw$PG.ProteinNames <- gsub("_HUMAN", "", raw$PG.ProteinNames)
+raw <- raw[-which(grepl("Keratin", raw$PG.ProteinNames)), ]
 names(raw)[which( names(raw) == "PG.ProteinNames" )] <- "Gene"
 
 raw[which(!is.na(alternatives_long$V1[match(raw$Gene, alternatives_long$value)])), ]$Gene <- alternatives_long$V1[match(raw$Gene, alternatives_long$value)][which(!is.na(alternatives_long$V1[match(raw$Gene, alternatives_long$value)]))]
