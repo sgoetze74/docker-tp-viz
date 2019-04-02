@@ -32,7 +32,7 @@ def plot_table(protq, col_count=10, out_file_name='fmi_table.png'):
   """Plots FMI targets table with proteomics colors.
 
   Params:
-  - data: a pandas DataFrame with columns ['Gene', 'log2FC']
+  - data: a pandas DataFrame with columns ['Gene', 'log2fc']
   - col_count: the number of columns in the resulting table
   - out_file_name: the name of output table figure.
                    NOTE by changing the extension the output format is
@@ -49,7 +49,7 @@ def plot_table(protq, col_count=10, out_file_name='fmi_table.png'):
     for _ in range(0, col_count):
       if pos < protq.shape[0]:
         row_text.append(protq['Gene'][pos])
-        row_color.append(assign_color(protq['log2FC'][pos]))
+        row_color.append(assign_color(protq['log2fc'][pos]))
       else:
         row_text.append('')
         row_color.append('white')
@@ -80,7 +80,7 @@ def get_arguments(parser):
   """Set up command line parameters
   """
   parser.add_argument("-i", "--infile",
-                      help="The input csv file. This table must have a Gene and a log2FC column.",
+                      help="The input csv file. This table must have a Gene and a log2fc column.",
                       metavar="FILE",
                       required=True)
   parser.add_argument("-o", "--outfile",
