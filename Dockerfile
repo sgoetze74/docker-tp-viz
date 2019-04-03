@@ -10,6 +10,10 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get install -y python3 r-base
 
+# Install R dependencies
+COPY r_deps.r /tmp
+RUN Rscript /tmp/r_deps.r
+
 ## Copy scripts and data into the container
 COPY src /usr/local/src
 COPY data /usr/local/data
