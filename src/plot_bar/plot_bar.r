@@ -63,7 +63,7 @@ my_col[which(case_sorted$log2fc < -1)] <- "blue"
 my_xmax <- round(max(abs(case_sorted$log2fc), na.rm=T)) + 3
 
 
-pdf(paste0("barplot_", filename, "_top100.pdf"))
+pdf(paste0(filename, "_barplot_top100.pdf"))
 
 barplot(case_sorted$log2fc, names.arg=case_sorted$Gene, horiz=T, las=1, col=my_col, xlab="log2fc", xlim=c(-my_xmax, my_xmax), cex.names=0.3, main=paste0(dim(case_sorted)[1], " proteins"))
 
@@ -87,7 +87,7 @@ my_col[which(markers_sorted$log2fc < -1)] <- "blue"
 my_xmax <- round(max(abs(markers_sorted$log2fc), na.rm=T)) + 1
 
 
-pdf(paste0("barplot_", filename, "_marker.pdf"))
+pdf(paste0(filename, "_barplot_marker.pdf"))
 
 barplot(markers_sorted$log2fc, names.arg=markers_sorted$Gene, horiz=T, las=1, col=my_col, xlab="log2FC", xlim=c(-my_xmax, my_xmax), cex.names=0.8, main=paste0(dim(markers_sorted)[1], " marker proteins"))
 abline(v=1, lty=3)
