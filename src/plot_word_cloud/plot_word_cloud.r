@@ -41,14 +41,9 @@ library( data.table )
 ## Load GO data
 go.loadgo <- function( species="Hsap" ) {
 
-    if( species == "Scer" ){
-        go_file_name="/cluster/scills/proteomics/Software/Sources/MyRSrcs/GO/Data/Scer/gene_association.sgd"
-        go_obo_file_name="/cluster/scills/proteomics/Software/Sources/MyRSrcs/GO/Data/go_obo"
-    }
-    ## TODO: make sure that formats are similar before enabling
-    else if( species == "Hsap" ) {
-        go_file_name="~/project/phrt/TpViz/docker-tp-viz/data/goa_human.gaf"
-        go_obo_file_name="~/project/phrt/TpViz/docker-tp-viz/data/go_obo"
+    if( species == "Hsap" ) {
+        go_file_name="/usr/local/data/goa_human.gaf"
+        go_obo_file_name="/usr/local/data/go_obo"
     }
     ## else if( species == "Mmus" ) {
     ##     go_file_name="GO/Data/Mmus/gene_association_trim.mgi"
@@ -192,11 +187,11 @@ bg <- unlist(raw$Gene)
 
 up.go <- go.gethyper( go , bg , up , "biological_process" , "fdr" )
 go.wordcloud( up.go , p.cutoff=0.01, paste0("up_", filename) )
-write.table( up.go , file=paste0("go_up_",  filename, ".csv"), col.name=T, row.name=F, sep="\t", quote=F )
+write.table( up.go , file=paste0("go_up_",  filename, ".tsv"), col.name=T, row.name=F, sep="\t", quote=F )
 
 down.go <- go.gethyper( go , bg , down , "biological_process" , "fdr" )
 go.wordcloud( down.go , p.cutoff=0.01, paste0("down_", filename) )
-write.table( down.go , file=paste0("go_down_",  filename, ".csv"), col.name=T, row.name=F, sep="\t", quote=F )
+write.table( down.go , file=paste0("go_down_",  filename, ".tsv"), col.name=T, row.name=F, sep="\t", quote=F )
 
 
 message("Done.")

@@ -109,7 +109,7 @@ def main():
     print("ERROR: Cannot read input file")
     exit(1)
 
-  protq = pd.read_csv('{}'.format(args.infile))
+  protq = pd.read_csv('{}'.format(args.infile), sep='\t')
   plot_table(protq, args.colnum, '{}'.format(args.outfile))
 
 
