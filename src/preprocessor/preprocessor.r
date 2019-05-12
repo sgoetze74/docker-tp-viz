@@ -1,10 +1,10 @@
 library(data.table)
 
-#fmi_gene <- fread("/usr/local/data/fmi_gene_list.txt", header=F)
-#uniprot2gene <- fread("/usr/local/data/uniprotEntry2Gene")
+fmi_gene <- fread("/usr/local/data/fmi_gene_list.txt", header=F)
+uniprot2gene <- fread("/usr/local/data/uniprotEntry2Gene")
 
-fmi_gene <- fread("/IMSB/nas22/shaow/project/phrt/TpViz/docker-tp-viz/data/fmi_gene_list.txt", header=F)
-uniprot2gene <- fread("/IMSB/nas22/shaow/project/phrt/TpViz/docker-tp-viz/data/uniprotEntry2Gene")
+#fmi_gene <- fread("/IMSB/nas22/shaow/project/phrt/TpViz/docker-tp-viz/data/fmi_gene_list.txt", header=F)
+#uniprot2gene <- fread("/IMSB/nas22/shaow/project/phrt/TpViz/docker-tp-viz/data/uniprotEntry2Gene")
 
 alternatives <- fmi_gene[grepl("_", fmi_gene$V1), ]
 alternatives[, gene1 := sapply( strsplit(alternatives$V1, "_"), "[[", 1  ) ]
