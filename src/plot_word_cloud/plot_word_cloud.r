@@ -145,7 +145,7 @@ go.wordcloud <- function( genome.gocount , p.cutoff=0.01, filename ) {
     text <- gsub( " " , "_" , genome.gocount$name )
 
     ## Do the actual plotting
-    pdf( paste0("go_", filename, ".pdf") , 20 , 20 )
+    pdf( paste0(filename, ".pdf") , 20 , 20 )
     wordcloud( text , ceiling(-log10(genome.gocount$adj.p ) ) , min.freq=-log10( p.cutoff ) )
     dev.off()
 }
@@ -186,12 +186,12 @@ down <- unlist(raw[log2fc < -2, ]$Gene)
 bg <- unlist(raw$Gene)
 
 up.go <- go.gethyper( go , bg , up , "biological_process" , "fdr" )
-go.wordcloud( up.go , p.cutoff=0.01, paste0("up_", filename) )
-write.table( up.go , file=paste0("go_up_",  filename, ".tsv"), col.name=T, row.name=F, sep="\t", quote=F )
+go.wordcloud( up.go , p.cutoff=0.01, paste0(filename, "_go_up") )
+write.table( up.go , file=paste0(filename, "_go_up.tsv"), col.name=T, row.name=F, sep="\t", quote=F )
 
 down.go <- go.gethyper( go , bg , down , "biological_process" , "fdr" )
-go.wordcloud( down.go , p.cutoff=0.01, paste0("down_", filename) )
-write.table( down.go , file=paste0("go_down_",  filename, ".tsv"), col.name=T, row.name=F, sep="\t", quote=F )
+go.wordcloud( down.go , p.cutoff=0.01, paste0(filename, "_go_down") )
+write.table( down.go , file=paste0(filename, "_go_down.tsv"), col.name=T, row.name=F, sep="\t", quote=F )
 
 
 message("Done.")
