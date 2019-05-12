@@ -34,6 +34,7 @@ list_tsv <- system(command="ls *_preprocessed.tsv", intern=T)
 
 cosmic <- fread("/usr/local/data/Cancer_Census_all_072018_COSMIC.csv")
 list_prot <- fread("/usr/local/data/Melanoma_marker_Anja_IDs.csv", header=T)
+list_prot <- fread("/usr/local/data/OVCA_makrer_pre-selection_sgo.csv", header=T)
 
 for(i in 1:length(list_tsv)) {
 
