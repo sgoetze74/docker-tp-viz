@@ -1,5 +1,7 @@
-
 library(data.table)
+
+args <- commandArgs(TRUE)
+my_sample_type <- args[2]
 
 plot_figures <- function(case, output_name) {
 
@@ -33,7 +35,17 @@ dev.off()
 list_tsv <- system(command="ls *_preprocessed.tsv", intern=T)
 
 cosmic <- fread("/usr/local/data/Cancer_Census_all_072018_COSMIC.csv")
-list_prot <- fread("/usr/local/data/Melanoma_marker_Anja_IDs.csv", header=T)
+
+if(my_sample_type=="Melanoma") {
+  list_prot <- fread("/usr/local/data/Melanoma_marker_Anja_IDs.csv", header=T)
+} else if(my_sample_type=="OVCA") {
+  list_prot <- fread("/usr/local/data/OVCA_makrer_pre-selection_sgo.csv", header=T)
+} else {
+  cat("WARNING: unsupported sample type! Now set to Melanoma by default")
+  list_prot <- fread("/usr/local/data/Melanoma_marker_Anja_IDs.csv", header=T)
+}
+
+#list_prot <- fread("/usr/local/data/Melanoma_marker_Anja_IDs.csv", header=T)
 #list_prot <- fread("/usr/local/data/OVCA_makrer_pre-selection_sgo.csv", header=T)
 
 for(i in 1:length(list_tsv)) {
